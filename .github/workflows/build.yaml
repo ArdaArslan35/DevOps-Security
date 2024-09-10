@@ -30,7 +30,7 @@ jobs:
             ardaarslan35/solidapps:latest
   test:
     name: Test
-          needs: [build]
+    needs: [ build ]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
