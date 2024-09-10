@@ -1,7 +1,8 @@
-from flask import Flask, request, redirect, make_response
+from flask import Flask, request, redirect, make_response, escape
 import sqlite3
 import urllib
 import quoter_templates as templates
+
 
 # Run using `poetry install && poetry run flask run --reload`
 app = Flask(__name__)
@@ -33,7 +34,8 @@ def check_authentication():
 @app.route("/")
 def index():
     quotes = db.execute("select id, text, attribution from quotes order by id").fetchall()
-    return templates.main_page(quotes, request.user_id, request.args.get('error'))
+    error_message = escape(request.args.get('error', ''))
+    return templates.main_page(quotes, request.user_id, error_message)
 
 
 # The quote comments page
@@ -57,7 +59,7 @@ def post_quote():
 def post_comment(quote_id):
     with db:
         cur.execute("""insert into comments(text,quote_id,user_id) values("{request.form['text']}",{quote_id},{request.user_id})""")
-    return redirect("/quotes/{quote_id}#bottom")
+    return redirect(f"/quotes/{quote_id}#bottom")
 
 
 # Sign in user
@@ -78,7 +80,7 @@ def signin():
             user_id = cursor.lastrowid
     
     response = make_response(redirect('/'))
-    response.set_cookie('user_id', str(user_id))
+    response.set_cookie('user_id', str(user_id), secure=True, httponly=True, samesite='Lax')
     return response
 
 
