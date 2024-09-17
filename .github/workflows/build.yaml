@@ -19,7 +19,6 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-      
       - name: Build and push the Docker image
         uses: docker/build-push-action@v5
         with:
@@ -49,7 +48,7 @@ jobs:
         ignore-base: false
         ignore-unchanged: false
         write-comment: true
-        github-token: ${{ secrets. GITHUB_TOKEN }} # to be able to write the
+        github-token: ${{ secrets.SCAN_SECRET_TOKEN }}
         comment
         exit-code: true
         exit-on: vulnerability
