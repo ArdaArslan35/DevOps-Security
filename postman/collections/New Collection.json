@@ -49,10 +49,26 @@
 							"\r",
 							"    pm.expect(responseBody).to.include(\"addEventListener('scroll', function()\");\r",
 							"});\r",
+							"\r",
+							"pm.test(\"Check if rate limiting is applied\", function () {\r",
+							"    if (pm.response.code === 429) {\r",
+							"        pm.environment.set(\"rateLimited\", true);\r",
+							"        console.log(\"Rate limit reached after \" + pm.variables.get(\"counter\") + \" requests.\");\r",
+							"    } else {\r",
+							"        pm.expect(pm.response.code).to.be.oneOf([200, 201]);\r",
+							"    }\r",
+							"});\r",
 							""
 						],
 						"type": "text/javascript",
 						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"packages": {},
+						"type": "text/javascript"
 					}
 				}
 			],
