@@ -80,7 +80,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://3.87.74.9:30000/",
+					"raw": "http://107.21.69.93:30000//",
 					"protocol": "http",
 					"host": [
 						"3",
