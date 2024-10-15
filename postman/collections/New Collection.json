@@ -49,6 +49,26 @@
 							"\r",
 							"    pm.expect(responseBody).to.include(\"addEventListener('scroll', function()\");\r",
 							"});\r",
+							"\r",
+							"pm.test(\"Check if rate limiting is applied\", function () {\r",
+							"    if (pm.response.code === 429) {\r",
+							"        pm.environment.set(\"rateLimited\", true);\r",
+							"        console.log(\"Rate limit reached after \" + pm.variables.get(\"counter\") + \" requests.\");\r",
+							"    } else {\r",
+							"        pm.expect(pm.response.code).to.be.oneOf([200, 201]);\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "75c24808-a9f9-43f0-b7bc-26f97b329d0c",
+						"exec": [
 							""
 						],
 						"type": "text/javascript",
@@ -64,13 +84,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://3.87.74.9:30000/",
+					"raw": "http://107.21.69.93:30000/",
 					"protocol": "http",
 					"host": [
-						"3",
-						"87",
-						"74",
-						"9"
+						"107",
+						"21",
+						"69",
+						"93"
 					],
 					"port": "30000",
 					"path": [
